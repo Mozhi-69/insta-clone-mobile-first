@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { Home, Search, Heart, MessageCircle, User, PlusSquare, Film } from 'lucide-react';
-import Home as HomePage from './Home';
-import Search as SearchPage from './Search';
+import HomePage from './Home';
+import SearchPage from './Search';
 import Reels from './Reels';
 import Notifications from './Notifications';
 import Profile from './Profile';
@@ -60,7 +60,6 @@ const Layout = ({ onUpload, onStorySelect, onPostSelect }: LayoutProps) => {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/messages" element={<Messages />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
 
