@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { Home, Search, Heart, MessageCircle, User, PlusSquare, Film } from 'lucide-react';
 import HomePage from './Home';
 import SearchPage from './Search';
@@ -17,7 +17,7 @@ interface LayoutProps {
 
 const Layout = ({ onUpload, onStorySelect, onPostSelect }: LayoutProps) => {
   const location = useLocation();
-  const [currentPath, setCurrentPath] = useState('/');
+  const navigate = useNavigate();
 
   const navItems = [
     { path: '/', icon: Home, label: 'Home' },
@@ -31,8 +31,7 @@ const Layout = ({ onUpload, onStorySelect, onPostSelect }: LayoutProps) => {
     if (action) {
       action();
     } else {
-      setCurrentPath(path);
-      window.history.pushState({}, '', path);
+      navigate(path);
     }
   };
 
@@ -45,8 +44,14 @@ const Layout = ({ onUpload, onStorySelect, onPostSelect }: LayoutProps) => {
             Instagram
           </h1>
           <div className="flex items-center space-x-4">
-            <Heart className="w-6 h-6 cursor-pointer hover:text-red-500 transition-colors" onClick={() => handleNavClick('/notifications')} />
-            <MessageCircle className="w-6 h-6 cursor-pointer hover:text-blue-500 transition-colors" onClick={() => handleNavClick('/messages')} />
+            <Heart 
+              className="w-6 h-6 cursor-pointer hover:text-red-500 transition-colors" 
+              onClick={() => navigate('/notifications')} 
+            />
+            <MessageCircle 
+              className="w-6 h-6 cursor-pointer hover:text-blue-500 transition-colors" 
+              onClick={() => navigate('/messages')} 
+            />
           </div>
         </div>
       </header>
@@ -67,7 +72,7 @@ const Layout = ({ onUpload, onStorySelect, onPostSelect }: LayoutProps) => {
       <nav className="bg-white border-t border-gray-200 px-4 py-2 fixed bottom-0 left-0 right-0 z-20">
         <div className="flex justify-around items-center max-w-md mx-auto">
           {navItems.map((item) => {
-            const isActive = currentPath === item.path || location.pathname === item.path;
+            const isActive = location.pathname === item.path;
             const IconComponent = item.icon;
             
             return (
